@@ -27,23 +27,57 @@ transmitter gain, receiver gain, radar frequency, radar cross section, and minim
 
    ___Algorithm__:
    
+1.Take input radar parameters.
+2.Convert all dB values to linear.
+3.Calculate wavelength ( \lambda = c/f ).
+4.Calculate minimum detectable power ( P_{min} ).
+5.Apply radar range equation.
+6.Compute and output maximum radar range ( R_{max} ).
 
+Program:
+clc
+clear;
+close;
 
+Pt = 1000;
+G = 40;
+lambda = 0.05;
+sigma = 10;
+pi4 = (4*%pi)^3;
 
+R = linspace(1e3, 200e3, 500);
+Pr_R = (Pt .* G^2 .* lambda^2 .* sigma) ./ (pi4 .* R.^4);
+figure(1);
+Pr_R_dB = 10 .* log10(Pr_R);
+plot(R/1000, Pr_R_dB);
+xlabel("Power Received");
+ylabel("Range");
 
+Pt_values = linspace(100, 10000, 500);
+R_fixed = 50e3;
+Pr_Pt = (Pt_values .* G^2 .* lambda^2 .* sigma) ./ (pi4 .* R_fixed.^4);
+figure(2);
+plot(Pt_values, Pr_Pt);
+xlabel("Power Received");
+ylabel("Power Transmitted");
 
+G_values = linspace(5, 60, 500);
+Pt_fixed = 3000;
+Pr_G = (Pt_fixed .* G_values.^2 .* lambda^2 .* sigma) ./ (pi4 .* R_fixed.^4);
+figure(3);
+plot(G_values, Pr_G);
+xlabel("Power Received");
+ylabel("Gain");
 
-
-   __Output__:
+  
+__Output__:
    
+![WhatsApp Image 2025-11-12 at 10 09 21_194b6af3](https://github.com/user-attachments/assets/b249999b-4d68-48a8-a681-f8993194dba9)
+![WhatsApp Image 2025-11-12 at 10 09 22_3a6b8d79](https://github.com/user-attachments/assets/1fb978b3-ffa1-4c33-9f5d-ccaca49ebb7f)
+![WhatsApp Image 2025-11-12 at 10 09 22_91703509](https://github.com/user-attachments/assets/b18aea03-5673-49d5-8ff0-c050ca9a2b2c)
 
-
-
-
-
-
-
-   __Result__:
+__Result__:
+Thus,the output graph is executed and verified successfully.
    
 
 
